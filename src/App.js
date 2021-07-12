@@ -1,23 +1,26 @@
-import logo from './logo.svg';
+import React,{ useState, useEffect  } from 'react';
 import './App.css';
 
 function App() {
+  const [boxes,setBoxes] = useState([{bg: "#" + (Math.random() * 0xffffff <<0).toString(16)}]);
+
+  useEffect (() => {
+    
+     const Interval = setInterval ( () => {
+      setBoxes([...boxes, {bg: "#" + (Math.random() * 0xffffff <<0).toString(16) }])
+    },100 )
+    return () => clearInterval(Interval);
+  
+  },[boxes]);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="hero">
+      {boxes.map((box, index) => (
+        <box key={index} className='box' style={{background:box.bg}}>
+        <p>{index}</p>
+      </box>
+  ))}
     </div>
   );
 }
